@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Khalis Voice - AI Music Remover</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f8f5;
+  color: #173c2c;
+}
+
+header {
+  background: #075e3d;
+  color: white;
+  padding: 25px 15px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+header p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px #00000012;
+  text-align: center;
+}
+
+.upload {
+  border: 2px dashed #0b8053;
+  padding: 30px 10px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+input[type=file] {
+  width: 100%;
+  max-width: 260px;
+}
+
+button {
+  background: #087b50;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #aabbb2;
+  cursor: not-allowed;
+}
+
+audio {
+  width: 100%;
+  margin-top: 15px;
+}
+
+#status {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 12px;
+  color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎙 Khalis Voice</h1>
+  <p>Pure Voice. No Music.</p>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <h2>AI Music Remover</h2>
+
+    <p>
+      Upload your Naat, Nasheed, Song
+      or Audio to isolate vocals.
+    </p>
+
+    <div class="upload">
+      <p>📁 Select Audio File</p>
+
+      <input
+        type="file"
+        id="audioFile"
+        accept="audio/*"
+      >
+    </div>
+
+    <h3>Original Audio</h3>
+
+    <audio id="originalAudio" controls></audio>
+
+    <button id="removeBtn" disabled>
+      Remove Music
+    </button>
+
+    <p id="status">
+      Please select an audio file.
+    </p>
+
+    <div id="result" hidden>
+      <h3>Isolated Voice</h3>
+
+      <audio id="voiceAudio" controls></audio>
+
+      <button id="downloadBtn">
+        Download Voice
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Khalis Voice © 2026
+</footer>
+
+<script>
+const fileInput = document.getElementById("audioFile");
+const originalAudio = document.getElementById("originalAudio");
+const removeBtn = document.getElementById("removeBtn");
+const statusText = document.getElementById("status");
+const result = document.getElementById("result");
+
+let audioURL = null;
+
+fileInput.addEventListener("change", function() {
+  const file = this.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("audio/")) {
+    statusText.textContent = "Please select an audio file.";
+    return;
+  }
+
+  if (audioURL) {
+    URL.revokeObjectURL(audioURL);
+  }
+
+  audioURL = URL.createObjectURL(file);
+
+  originalAudio.src = audioURL;
+
+  removeBtn.disabled = false;
+  result.hidden = true;
+
+  statusText.textContent =
+    "Audio loaded: " + file.name;
+});
+
+removeBtn.addEventListener("click", function() {
+  statusText.textContent =
+    "AI music removal is not connected yet. " +
+    "We'll add the processing service next.";
+});
+</script>
+
+</body>
+</html>
