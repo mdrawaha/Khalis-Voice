@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#064e3b">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Khalis Voice - Music Remover</title>
@@ -9,7 +11,19 @@
 * {
   box-sizing: border-box;
 }
-
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => {
+        console.log("Khalis Voice offline support enabled");
+      })
+      .catch(error => {
+        console.error("Service worker error:", error);
+      });
+  });
+}
+</script>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
